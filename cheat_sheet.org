@@ -1,0 +1,179 @@
+#+TITLE: Cheatsheet
+#+STARTUP: content
+
+* SQLite
+
+** Read from a file
+=.read <FILE>=
+
+* CSCOPE
+
+#+BEGIN_SRC bash
+find . -name "*.c" -o -name "*.cpp" -o -name "*.h" -o -name "*.hpp" -o -name "*.cc" -o -name "*.hh" > cscope.files
+cscope -q -R -b -i cscope.files
+#+END_SRC
+
+* Org-Mode
+
+Toggle checkbox: =C-c C-c=
+Insert a link: =C-c C-l=
+
+
+* Bash
+
+** Special Varaibles
+
+- =$0= name of the script
+- =$1=-=$9= other arguments
+- =$#= number of arguments
+- =$?= exit status of last process
+- =$$= PID of the current process
+- =$USER= username
+- =$HOSTNAME= hostname
+- =$SECONDS= number of second since the start of the script
+- =$RANDOM= return a random number
+- =$LINENO= current line number in script
+
+** Quotes
+
+- Single quotes will treat every character literally.
+- Double quotes will allow you to do substitution.
+
+** Read Value
+
+Use the =read= command
+
+#+BEGIN_SRC bash
+#!/bin/bash
+# Ask the user for login details
+read -p 'Username: ' uservar
+# -sp makes the prompt silent
+read -sp 'Password: ' passvar
+echo
+echo Thankyou $uservar we now have your login details
+#+END_SRC
+
+** Arithmatics
+
+*** Using let to bind a value
+#+BEGIN_SRC bash
+let a=5+4
+echo $a # 9
+
+let "a = 5 + 4"
+echo $a # 9
+
+let a++
+echo $a # 10
+
+let "a = 4 * 5"
+echo $a # 20
+
+let "a = $1 + 30"
+echo $a # 30 + first command line argument
+#+END_SRC
+
+*** Using expr to evaluate an expression
+
+#+BEGIN_SRC bash
+expr 5 + 4
+expr "5 + 4"
+
+expr 5+4
+expr 5 \* $1
+
+expr 11 % 2
+a=$( expr 10 - 3 )
+echo $a # 7
+#+END_SRC bash
+
+*** Double Parenthesis
+=$(( expression ))= can also evaluate an expression
+
+*** Length of a Varaible
+Use =${#var}= to get the length of some varaible
+
+** If Statement
+
+#+BEGIN_SRC bash
+if [ <some test> ]
+then
+  <commands>
+elif [ <some test> ]
+  <commands>
+else
+  <commands>
+fi
+#+END_SRC bash
+
+** Tests
+
+| Operator                      | Description                                                           |
+|-------------------------------+-----------------------------------------------------------------------|
+| ! EXPRESSION                  | The EXPRESSION is false.                                              |
+| -n STRING                     | The length of STRING is greater than zero.                            |
+| -z STRING                     | The lengh of STRING is zero (ie it is empty).                         |
+| STRING1 = STRING2             | STRING1 is equal to STRING2                                           |
+| STRING1 != STRING2	    | STRING1 is not equal to STRING2                                       |
+| INTEGER1 -eq INTEGER2         | INTEGER1 is numerically equal to INTEGER2                             |
+| INTEGER1 -gt INTEGER2         | INTEGER1 is numerically greater than INTEGER2                         |
+| INTEGER1 -lt INTEGER2	 | INTEGER1 is numerically less than INTEGER2                            |
+| -d FILE                       | FILE exists and is a directory.                                       |
+| -e FILE                       | FILE exists.                                                          |
+| -r FILE                       | FILE exists and the read permission is granted.                       |
+| -s FILE                       | FILE exists and it's size is greater than zero (ie. it is not empty). |
+| -w FILE                       | FILE exists and the write permission is granted.                      |
+| -x FILE                       | FILE exists and the execute permission is granted.                    |
+
+** Case Statements
+
+#+BEGIN_SRC bash
+case <variable> in
+<pattern 1>)
+  <commands>
+;;
+<pattern 2>)
+  <other commands>
+;;
+esac
+#+END_SRC
+
+** While Statements
+
+#+BEGIN_SRC bash
+while [ <some test> ]
+do
+  <commands>
+done
+#+END_SRC
+
+** Until Statements
+
+#+BEGIN_SRC bash
+until [ <some test> ]
+do
+  <commands>
+done
+#+END_SRC
+
+** For Loops
+
+#+BEGIN_SRC bash
+for var in <list>
+do
+  <commands>
+done
+#+END_SRC
+
+** Function
+
+
+#+BEGIN_SRC bash
+function function_name {
+  <commands>
+}
+
+function_name () {
+  <commands>
+}
+#+END_SRC
