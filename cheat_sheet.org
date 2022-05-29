@@ -1,4 +1,5 @@
 #+TITLE: Cheatsheet
+#+AUTHOR: Guangchen Li
 #+STARTUP: content
 
 * SQLite
@@ -17,7 +18,6 @@ cscope -q -R -b -i cscope.files
 
 Toggle checkbox: =C-c C-c=
 Insert a link: =C-c C-l=
-
 
 * Bash
 
@@ -176,4 +176,43 @@ function function_name {
 function_name () {
   <commands>
 }
+#+END_SRC
+* Makefile
+** Special Symbols
+- =$@= expands to the target name
+- =$<= expands to the first dependency
+- =$^= expands to all dependencies
+
+** Filename Functions
+
+- =$(dir names…)=: Extracts the directory-part of each file name in names.
+- =$(notdir names…)=: Extracts all but the directory-part of each file name in names.
+- =$(suffix names…)=: Extracts the suffix of each file name in names.
+- =$(basename names…)=: Extracts all but the suffix of each file name in names
+- =$(addsuffix suffix,names…)=: The argument names is regarded as a series of names, separated by whitespace.
+- =$(addprefix prefix,names…)=: The argument names is regarded as a series of names, separated by whitespace.
+- =$(join list1,list2)=: Concatenates the two arguments word by word.
+- =$(wildcard pattern)=: Match a pattern
+- =$(realpath names…)=: A canonical name does not contain any . or .. components, nor any repeated path separators (/) or symlinks.
+- =$(abspath names…)=: For each file name in names return an absolute name that does not contain any . or .. components, nor any repeated path separators (/).
+
+** A template
+#+BEGIN_SRC makefile
+SHELL = /bin/sh
+
+OBJS =
+CFLAG = -Wall -g
+CC = gcc
+INCLUDE =
+LIBS =
+SRC = src
+BUILD = build
+EXE =
+
+$(BUILD)/%.o: $(SRC)/%.c
+   ${CC} ${CFLAGS} ${INCLUDES} -c $<
+
+clean:
+   -rm $(BUILD)/*
+
 #+END_SRC
